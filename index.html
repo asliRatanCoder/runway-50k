@@ -274,8 +274,10 @@ dialog h3{font-family:var(--display);font-size:19px;margin:0 0 14px}
             <div id="ghConnected" class="ghconn" hidden><span id="ghInfo"></span><span class="ghbtns"><button type="button" class="ghost sm" id="ghSync">Sync now</button><button type="button" class="ghost sm danger" id="ghDisc">Disconnect</button></span></div>
             <p class="hint" id="ghHelp">Make the token at github.com → Settings → Developer settings → Fine-grained tokens. Repository access: only the data repo. Permissions: Contents, read and write. Pick the longest expiry. The token is stored only in this browser.</p>
           </div>
-          <div class="eyebrow" style="margin-top:18px">Copy of the data</div>
+          <div id="copyBox">
+<div class="eyebrow" style="margin-top:18px">Copy of the data</div>
           <div class="iobtns"><button type="button" class="ghost sm" id="exportBtn">Export JSON</button><label class="ghost sm filebtn">Import JSON<input type="file" id="importFile" accept="application/json,.json" hidden></label></div>
+</div>
           </section>
     </div>
 
@@ -754,7 +756,7 @@ $('#settingsCard').addEventListener('change',e=>{ const i=e.target.closest('inpu
 
 /* backup, export, import */
 function renderSync(){
-  const box=$('#backupBox'); box.hidden=state.mode==='db';
+  const box=$('#backupBox'); box.hidden=state.mode==='db'; $('#copyBox').hidden=state.mode==='db';
   const on=state.mode==='github'&&!!Store.gh;
   $('#ghForm').hidden=on; $('#ghHelp').hidden=on; $('#ghConnected').hidden=!on;
   if(on) $('#ghInfo').textContent='Connected to '+Store.gh.repo+(Store.lastSync?' · last sync '+fmtTime(Store.lastSync):'')+(Store.dirty?' · changes waiting':'');
